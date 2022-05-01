@@ -11,18 +11,18 @@ const db =
             database: 'company_db'
         },
         console.log(`Connected to the company_db database.`)
-    ),
-    getDepartments: function()
+    ).promise(),
+    getDepartments: async function()
     {
-        db.connection.query("SELECT * FROM departments;", (err, result) =>
+        try
         {
-            if(err)
-            {
-                console.error(err);
-            }
-            console.table(result);
-            //this.connection.destroy();
-        })
+            let query = await db.connection.query("SELECT * FROM departments;");
+            console.table(query[0]);
+        }
+        catch (error)
+        {
+            console.error(error);
+        }
     }
 };
 

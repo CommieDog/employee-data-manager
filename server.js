@@ -18,7 +18,7 @@ async function mainMenu()
         dbFunction = selectDatabaseFunction(userInput);
         if(dbFunction)
         {
-            dbFunction();
+            await dbFunction();
         }
     } while(userInput !== "Quit Employee Data Manager");
 
