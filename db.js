@@ -14,16 +14,16 @@ const db =
     ),
     getDepartments: function()
     {
-        this.connection.query("SELECT * FROM departments;", (err, result) =>
+        db.connection.query("SELECT * FROM departments;", (err, result) =>
         {
             if(err)
             {
                 console.error(err);
             }
             console.table(result);
-            this.connection.destroy();
+            //this.connection.destroy();
         })
     }
-}
+};
 
-//db.getDepartments();
+module.exports = db;

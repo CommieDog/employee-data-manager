@@ -1,4 +1,5 @@
 const inquirer = require("inquirer");
+const db = require("./db");
 
 async function mainMenu()
 {
@@ -14,8 +15,21 @@ async function mainMenu()
             }
         );
         userInput = userInput.action;
-        console.log(userInput);
+        dbFunction = selectDatabaseFunction(userInput);
+        if(dbFunction)
+        {
+            dbFunction();
+        }
     } while(userInput !== "Quit Employee Data Manager");
+
+    function selectDatabaseFunction(input)
+    {
+        switch(input)
+        {
+            case "View all departments":
+                return db.getDepartments;
+        }
+    }
 }
 
 mainMenu();
