@@ -4,7 +4,7 @@ const db = require("./db");
 async function mainMenu()
 {
     let userInput;
-    do
+    while(true)
     {
         userInput = await inquirer.prompt(
             {
@@ -20,7 +20,11 @@ async function mainMenu()
         {
             await dbFunction();
         }
-    } while(userInput !== "Quit Employee Data Manager");
+        else
+        {
+            break;
+        }
+    }
 
     function selectDatabaseFunction(input)
     {

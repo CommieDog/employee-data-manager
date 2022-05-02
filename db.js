@@ -12,12 +12,18 @@ const db =
         },
         console.log(`Connected to the company_db database.`)
     ).promise(),
+    
     getDepartments: async function()
+    {
+        await db.queryAndPrintResults("SELECT * FROM departments;", [])
+    },
+
+    queryAndPrintResults: async function(query, params)
     {
         try
         {
-            let query = await db.connection.query("SELECT * FROM departments;");
-            console.table(query[0]);
+            let result = await db.connection.query(query, params);
+            console.table(result[0]);
         }
         catch (error)
         {
