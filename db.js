@@ -15,7 +15,17 @@ const db =
     
     getDepartments: async function()
     {
-        await db.queryAndPrintResults("SELECT * FROM departments;", [])
+        await db.queryAndPrintResults("SELECT name, id FROM departments;", []);
+    },
+
+    getRoles: async function()
+    {
+        await db.queryAndPrintResults("SELECT title, id, department_id, salary FROM roles;", []);
+    },
+
+    getEmployees: async function()
+    {
+        await db.queryAndPrintResults("SELECT id, first_name, last_name, role_id, manager_id FROM employees;", []);
     },
 
     queryAndPrintResults: async function(query, params)

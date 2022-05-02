@@ -4,7 +4,7 @@ const db = require("./db");
 async function mainMenu()
 {
     let userInput;
-    while(true)
+    while(true) // Looks like an infinite loop, but we break manually below
     {
         userInput = await inquirer.prompt(
             {
@@ -22,6 +22,7 @@ async function mainMenu()
         }
         else
         {
+            await db.connection.end();
             break;
         }
     }
@@ -32,6 +33,10 @@ async function mainMenu()
         {
             case "View all departments":
                 return db.getDepartments;
+            case "View all roles":
+                return db.getRoles;
+            case "View all employees":
+                return db.getEmployees;
         }
     }
 }
