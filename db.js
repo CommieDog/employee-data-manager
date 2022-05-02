@@ -25,8 +25,9 @@ const db =
 
     getEmployees: async function()
     {
-        await db.queryAndPrintResults(`SELECT employees.id, employees.first_name, employees.last_name, roles.title, departments.name AS department_name, roles.salary, employees.manager_id FROM employees
-        JOIN roles ON employees.role_id = roles.id
+        await db.queryAndPrintResults(`SELECT employee.id, employee.first_name, employee.last_name, roles.title, departments.name AS department_name, roles.salary, managers.first_name AS manager_first_name, managers.last_name AS manager_last_name FROM employees AS employee
+        LEFT JOIN employees AS managers ON employee.manager_id = managers.id
+        JOIN roles ON employee.role_id = roles.id
         JOIN departments ON roles.department_id = departments.id;`, []);
     },
 
