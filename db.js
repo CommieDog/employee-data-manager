@@ -31,12 +31,30 @@ const db =
         JOIN departments ON roles.department_id = departments.id;`, []);
     },
 
+    addDepartments: async function(params)
+    {
+        await db.queryAndPrintMessage("INSERT INTO departments (name) VALUES (?);", params, "New department successfully added!");
+    },
+
     queryAndPrintResults: async function(query, params)
     {
         try
         {
             let result = await db.connection.query(query, params);
             console.table(result[0]);
+        }
+        catch (error)
+        {
+            console.error(error);
+        }
+    },
+
+    queryAndPrintMessage: async function(query, params, message)
+    {
+        try
+        {
+            await db.connection.query(query, params);
+            console.log(message);
         }
         catch (error)
         {

@@ -18,7 +18,8 @@ async function mainMenu()
         dbFunction = selectDatabaseFunction(userInput);
         if(dbFunction)
         {
-            await dbFunction();
+            let args = await promptForArgs(dbFunction);
+            await dbFunction(args);
         }
         else
         {
@@ -37,7 +38,24 @@ async function mainMenu()
                 return db.getRoles;
             case "View all employees":
                 return db.getEmployees;
+            case "Add a department":
+                return db.addDepartments;
         }
+    }
+
+    async function promptForArgs(dbFunction)
+    {
+        if(dbFunction === db.addDepartments)
+        {
+            let userInput = await inquirer.prompt(
+                {
+                    name: "departmentName",
+                    message: "What is the new department's name?"
+                }
+            );
+            return [userInput.departmentName];
+        }
+        return null;
     }
 }
 
