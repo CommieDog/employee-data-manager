@@ -22,7 +22,7 @@ async function mainMenu()
         }
         else
         {
-            await db.connection.end();
+            await db.connection.end(); // Don't forget to explictly close the connection or the program will hang!
             break;
         }
     }

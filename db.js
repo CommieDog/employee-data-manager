@@ -20,12 +20,14 @@ const db =
 
     getRoles: async function()
     {
-        await db.queryAndPrintResults("SELECT title, id, department_id, salary FROM roles;", []);
+        await db.queryAndPrintResults("SELECT roles.title, roles.id, departments.name AS department_name, roles.salary FROM roles JOIN departments ON roles.department_id = departments.id;", []);
     },
 
     getEmployees: async function()
     {
-        await db.queryAndPrintResults("SELECT id, first_name, last_name, role_id, manager_id FROM employees;", []);
+        await db.queryAndPrintResults(`SELECT employees.id, employees.first_name, employees.last_name, roles.title, departments.name AS department_name, roles.salary, employees.manager_id FROM employees
+        JOIN roles ON employees.role_id = roles.id
+        JOIN departments ON roles.department_id = departments.id;`, []);
     },
 
     queryAndPrintResults: async function(query, params)
