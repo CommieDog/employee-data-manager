@@ -54,6 +54,12 @@ async function mainMenu()
                 return db.getManagerEmployees;
             case "View a department's employees":
                 return db.getDepartmentEmployees;
+            case "Delete a department":
+                return db.deleteDepartment;
+            case "Delete a role":
+                return db.deleteRole;
+            case "Delete an employee":
+                return db.deleteEmployee;
         }
     }
 
@@ -172,6 +178,36 @@ async function mainMenu()
                 }
             );
             return [userInput.departmentId];
+        }
+        else if(dbFunction === db.deleteDepartment)
+        {
+            let userInput = await inquirer.prompt(
+                {
+                    name: "departmentId",
+                    message: "What is the id of the department you want to delete?"
+                }
+            );
+            return [userInput.departmentId];
+        }
+        else if(dbFunction === db.deleteRole)
+        {
+            let userInput = await inquirer.prompt(
+                {
+                    name: "roleId",
+                    message: "What is the id of the role you want to delete?"
+                }
+            );
+            return [userInput.roleId];
+        }
+        else if(dbFunction === db.deleteEmployee)
+        {
+            let userInput = await inquirer.prompt(
+                {
+                    name: "employeeId",
+                    message: "What is the id of the employee you want to delete?"
+                }
+            );
+            return [userInput.employeeId];
         }
         return null;
     }
