@@ -39,13 +39,17 @@ async function mainMenu()
             case "View all employees":
                 return db.getEmployees;
             case "Add a department":
-                return db.addDepartments;
+                return db.addDepartment;
+            case "Add a role":
+                return db.addRole;
+            case "Add an employee":
+                return db.addEmployee;
         }
     }
 
     async function promptForArgs(dbFunction)
     {
-        if(dbFunction === db.addDepartments)
+        if(dbFunction === db.addDepartment)
         {
             let userInput = await inquirer.prompt(
                 {
@@ -54,6 +58,54 @@ async function mainMenu()
                 }
             );
             return [userInput.departmentName];
+        }
+        else if(dbFunction === db.addRole)
+        {
+            let userInput = await inquirer.prompt(
+                [
+                    {
+                        name: "roleTitle",
+                        message: "What is the new role's title?"
+                    },
+                    {
+                        name: "roleSalary",
+                        message: "What is the new role's salary?"
+                    },
+                    {
+                        name: "roleDepartment",
+                        message: "What is the new role's department ID?"
+                    }
+                ]
+            );
+            return [userInput.roleTitle, userInput.roleSalary, userInput.roleDepartment];
+        }
+        else if(dbFunction === db.addEmployee)
+        {
+            let userInput = await inquirer.prompt(
+                [
+                    {
+                        name: "employeeFirstName",
+                        message: "What is the new employee's first name?"
+                    },
+                    {
+                        name: "employeeLastName",
+                        message: "What is the new employee's last name?"
+                    },
+                    {
+                        name: "employeeRole",
+                        message: "What is the new employee's role ID?"
+                    },
+                    {
+                        name: "employeeManager",
+                        message: "What is the new employee's manager ID? (Enter NULL for no manager.)"
+                    }
+                ]
+            );
+            if(userInput.employeeManager.toLowerCase() === "null")
+            {
+                userInput.employeeManager = null;
+            }
+            return [userInput.employeeFirstName, userInput.employeeLastName, userInput.employeeRole, userInput.employeeManager];
         }
         return null;
     }

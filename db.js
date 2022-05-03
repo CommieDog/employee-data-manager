@@ -31,9 +31,19 @@ const db =
         JOIN departments ON roles.department_id = departments.id;`, []);
     },
 
-    addDepartments: async function(params)
+    addDepartment: async function(params)
     {
         await db.queryAndPrintMessage("INSERT INTO departments (name) VALUES (?);", params, "New department successfully added!");
+    },
+
+    addRole: async function(params)
+    {
+        await db.queryAndPrintMessage("INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?);", params, "New role successfully added!");
+    },
+
+    addEmployee: async function(params)
+    {
+        await db.queryAndPrintMessage("INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);", params, "New employee successfully added!");
     },
 
     queryAndPrintResults: async function(query, params)
