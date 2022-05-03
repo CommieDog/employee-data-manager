@@ -51,9 +51,9 @@ async function mainMenu()
             case "Update an employee's manager":
                 return db.updateEmployeeManager;
             case "View a manager's subordinate employees":
-                return db.getRoles;
+                return db.getManagerEmployees;
             case "View a department's employees":
-                return db.getEmployees;
+                return db.getDepartmentEmployees;
         }
     }
 
@@ -152,6 +152,26 @@ async function mainMenu()
                 userInput.employeeManager = null;
             }
             return [userInput.employeeNewManager, userInput.employeeId];
+        }
+        else if(dbFunction === db.getManagerEmployees)
+        {
+            let userInput = await inquirer.prompt(
+                {
+                    name: "managerId",
+                    message: "What is the id of the manager whose subordinates you want to view?"
+                }
+            );
+            return [userInput.managerId];
+        }
+        else if(dbFunction === db.getDepartmentEmployees)
+        {
+            let userInput = await inquirer.prompt(
+                {
+                    name: "departmentId",
+                    message: "What is the id of the department whose employees you want to view?"
+                }
+            );
+            return [userInput.departmentId];
         }
         return null;
     }

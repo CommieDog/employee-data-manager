@@ -56,6 +56,26 @@ const db =
         await db.queryAndPrintMessage("UPDATE employees SET manager_id=? WHERE id=?;", params, "Employee manager successfully updated!");
     },
 
+    getManagerEmployees: async function(params)
+    {
+        await db.queryAndPrintResults(`SELECT employee.id, employee.first_name, employee.last_name, roles.title, departments.name AS department_name, roles.salary, managers.first_name AS manager_first_name, managers.last_name AS manager_last_name
+        FROM employees AS employee
+        LEFT JOIN employees AS managers ON employee.manager_id = managers.id
+        JOIN roles ON employee.role_id = roles.id
+        JOIN departments ON roles.department_id = departments.id
+        WHERE employee.manager_id=?;`, params);
+    },
+
+    getDepartmentEmployees: async function(params)
+    {
+        await db.queryAndPrintResults(`SELECT employee.id, employee.first_name, employee.last_name, roles.title, departments.name AS department_name, roles.salary, managers.first_name AS manager_first_name, managers.last_name AS manager_last_name
+        FROM employees AS employee
+        LEFT JOIN employees AS managers ON employee.manager_id = managers.id
+        JOIN roles ON employee.role_id = roles.id
+        JOIN departments ON roles.department_id = departments.id
+        WHERE departments.id=?;`, params);
+    },
+
     queryAndPrintResults: async function(query, params)
     {
         try
