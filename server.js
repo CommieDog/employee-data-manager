@@ -44,6 +44,8 @@ async function mainMenu()
                 return db.addRole;
             case "Add an employee":
                 return db.addEmployee;
+            case "Update an employee's role":
+                return db.updateEmployeeRole;
         }
     }
 
@@ -106,6 +108,22 @@ async function mainMenu()
                 userInput.employeeManager = null;
             }
             return [userInput.employeeFirstName, userInput.employeeLastName, userInput.employeeRole, userInput.employeeManager];
+        }
+        else if(dbFunction === db.updateEmployeeRole)
+        {
+            let userInput = await inquirer.prompt(
+                [
+                    {
+                        name: "employeeId",
+                        message: "What is the ID of the employee whose role you're updating?"
+                    },
+                    {
+                        name: "employeeNewRole",
+                        message: "What is the ID of the employee's new role?"
+                    }
+                ]
+            );
+            return [userInput.employeeNewRole, userInput.employeeId];
         }
         return null;
     }

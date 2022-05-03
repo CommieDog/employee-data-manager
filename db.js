@@ -46,6 +46,11 @@ const db =
         await db.queryAndPrintMessage("INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);", params, "New employee successfully added!");
     },
 
+    updateEmployeeRole: async function(params)
+    {
+        await db.queryAndPrintMessage("UPDATE employees SET role_id=? WHERE id=?;", params, "Employee role successfully updated!");
+    },
+
     queryAndPrintResults: async function(query, params)
     {
         try
