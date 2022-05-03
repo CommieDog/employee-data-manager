@@ -51,6 +51,11 @@ const db =
         await db.queryAndPrintMessage("UPDATE employees SET role_id=? WHERE id=?;", params, "Employee role successfully updated!");
     },
 
+    updateEmployeeManager: async function(params)
+    {
+        await db.queryAndPrintMessage("UPDATE employees SET manager_id=? WHERE id=?;", params, "Employee manager successfully updated!");
+    },
+
     queryAndPrintResults: async function(query, params)
     {
         try

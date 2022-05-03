@@ -11,7 +11,9 @@ async function mainMenu()
                 type: "list",
                 name: "action",
                 message: "What you you like to do next?",
-                choices: ["View all departments", "View all roles", "View all employees", "Add a department", "Add a role", "Add an employee", "Update an employee's role", "Quit Employee Data Manager"]
+                choices: ["View all departments", "View all roles", "View all employees", "Add a department", "Add a role", "Add an employee", "Update an employee's role",
+                    "Update an employee's manager", "View a manager's subordinate employees", "View a department's employees", "Delete a department", "Delete a role",
+                    "Delete an employee", "Quit Employee Data Manager", new inquirer.Separator()]
             }
         );
         userInput = userInput.action;
@@ -46,6 +48,12 @@ async function mainMenu()
                 return db.addEmployee;
             case "Update an employee's role":
                 return db.updateEmployeeRole;
+            case "Update an employee's manager":
+                return db.updateEmployeeManager;
+            case "View a manager's subordinate employees":
+                return db.getRoles;
+            case "View a department's employees":
+                return db.getEmployees;
         }
     }
 
@@ -124,6 +132,26 @@ async function mainMenu()
                 ]
             );
             return [userInput.employeeNewRole, userInput.employeeId];
+        }
+        else if(dbFunction === db.updateEmployeeManager)
+        {
+            let userInput = await inquirer.prompt(
+                [
+                    {
+                        name: "employeeId",
+                        message: "What is the ID of the employee whose manager you're updating?"
+                    },
+                    {
+                        name: "employeeNewManager",
+                        message: "What is the employee's new manager ID? (Enter NULL for no manager.)"
+                    }
+                ]
+            );
+            if(userInput.employeeNewManager.toLowerCase() === "null")
+            {
+                userInput.employeeManager = null;
+            }
+            return [userInput.employeeNewManager, userInput.employeeId];
         }
         return null;
     }
